@@ -19,7 +19,11 @@ func TestGetConfig(t *testing.T) {
 	if config.Password != "" {
 		t.Log("Password is not empty")
 	}
+	if config.Tags != nil {
+		t.Log("Tags not filled up")
+	}
+
 	if config.Tags == nil {
-		t.Error("Tags not empty")
+		t.Error("Tags empty")
 	}
 }
