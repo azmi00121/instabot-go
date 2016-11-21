@@ -9,6 +9,10 @@ func TestGetConfig(t *testing.T) {
 	if config.Username == "" {
 		t.Error("Username is empty")
 	}
+	if config.Username != "" {
+		t.Log("Username is not empty")
+	}
+
 	if config.Password == "" {
 		t.Error("Password is empty")
 	}
