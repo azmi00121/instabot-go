@@ -1,4 +1,4 @@
-package main
+package instabot
 
 import (
 	"fmt"
