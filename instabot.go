@@ -54,7 +54,6 @@ func main() {
 	fmt.Printf("\n%v\n", config)
 	jar, err := cookiejar.New(nil)
 	client := http.Client{Jar: jar}
-	// req, err := http.NewRequest("GET", login, nil)
 	httresp, err := client.Get(root)
 	if err != nil {
 		log.Printf(err.Error())
@@ -69,8 +68,10 @@ func main() {
 		log.Fatal(err)
 	}
 	log.Println(resp.StatusCode)
-	resp.Body.Close()
+	data, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		log.Fatal(err)
 	}
+	resp.Body.Close()
+	fmt.Println(string(data))
 }
