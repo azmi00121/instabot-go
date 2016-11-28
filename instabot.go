@@ -8,8 +8,6 @@ import (
 	"net/http/cookiejar"
 	"net/url"
 
-	"golang.org/x/net/publicsuffix"
-
 	yaml "gopkg.in/yaml.v2"
 )
 
@@ -54,20 +52,24 @@ func main() {
 	fmt.Printf("%s", root)
 	_, config := GetConfig()
 	fmt.Printf("\n%v\n", config)
-	options := cookiejar.Options{
-		PublicSuffixList: publicsuffix.List,
+	jar, err := cookiejar.New(nil)
+	client := http.Client{Jar: jar}
+	// req, err := http.NewRequest("GET", login, nil)
+	httresp, err := client.Get(root)
+	if err != nil {
+		log.Printf(err.Error())
 	}
-	jar, err := cookiejar.New(&options)
+	log.Printf(httresp.Status)
+	resp, err := client.PostForm(root, url.Values{
+		"password": {config.Password},
+		"username": {config.Username},
+	})
+
 	if err != nil {
 		log.Fatal(err)
 	}
-
-	client := http.Client{Jar: jar}
-	resp, err := client.PostForm(login, url.Values{
-		"username": {"vinitxxxx"},
-		"password": {"xxlssssinuxxxxx"},
-	})
-	fmt.Println(resp)
+	log.Println(resp.StatusCode)
+	resp.Body.Close()
 	if err != nil {
 		log.Fatal(err)
 	}
