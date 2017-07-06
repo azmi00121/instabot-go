@@ -21,6 +21,7 @@ const (
 	unfollow = "https://www.instagram.com/web/friendships/%s/unfollow/"
 )
 
+// Config struct for reading the config file
 type Config struct {
 	Username     string   `yaml:"USERNAME"`
 	Password     string   `yaml:"PASSWORD"`
@@ -29,7 +30,8 @@ type Config struct {
 	LikesPerUser int64    `yaml:"LIKES_PER_USER"`
 }
 
-func GetConfig() (error, Config) {
+// GetConfig method to read the config file
+func GetConfig() (Config, error) {
 	configFile, err := ioutil.ReadFile("config.yml")
 	if err != nil {
 		log.Fatal("Couldn't find the config file")
@@ -39,7 +41,7 @@ func GetConfig() (error, Config) {
 	if err != nil {
 		log.Fatalf("error: %v", err)
 	}
-	return nil, config
+	return config, nil
 }
 
 func main() {

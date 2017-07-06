@@ -4,7 +4,7 @@ import "testing"
 import "fmt"
 
 func TestGetConfig(t *testing.T) {
-	_, config := GetConfig()
+	config, _ := GetConfig()
 	fmt.Println(config)
 	if config.Username == "" {
 		t.Error("Username is empty")
